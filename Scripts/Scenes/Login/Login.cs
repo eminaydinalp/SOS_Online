@@ -38,6 +38,6 @@ public class Login : MonoBehaviour
         string password = passwordForm.text;
 
         auth.Login(email, password);
-
+        
     }
 }

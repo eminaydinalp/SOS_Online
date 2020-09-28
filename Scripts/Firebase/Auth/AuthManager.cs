@@ -76,6 +76,6 @@ public class AuthManager : Singleton<AuthManager>
 
         DB.GetUserInformation();
 
-        SceneManager.LoadScene("Lobby");
+        SceneManager.LoadScene("MainMenu");
     }
 }

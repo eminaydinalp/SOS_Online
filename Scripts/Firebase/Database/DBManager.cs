@@ -68,14 +68,14 @@ public class DBManager : Singleton<DBManager>
             invitesDatabase = FirebaseDatabase.DefaultInstance.GetReference("Invites");
             acceptedInvitesDatabase = FirebaseDatabase.DefaultInstance.GetReference("AcceptedInvites");
 
-            //if (auth.auth.CurrentUser != null)
-            //{
-            //    auth.AutoLogin(auth.auth.CurrentUser.UserId);
-            //}
-            //else
-            //{
-            //    SceneManager.LoadScene("Login");
-            //}
+            if (auth.auth.CurrentUser != null)
+            {
+                auth.AutoLogin(auth.auth.CurrentUser.UserId);
+            }
+            else
+            {
+                SceneManager.LoadScene("Login");
+            }
         }
         else
         {
@@ -116,7 +116,7 @@ public class DBManager : Singleton<DBManager>
         user.level = 0;
         user.totalnumberofgames = 0;
         user.totalgoldcount = 0;
-        user.leaguelevel = "";
+        //user.leaguelevel = "";
 
         Debug.Log("Kullanıcı başarıyla oluşturuldu, login sahnesine yönlendiriliyorsunuz...");
 
@@ -152,7 +152,7 @@ public class DBManager : Singleton<DBManager>
                 user.username = username;
                 user.city = city;
                 user.country = country;
-                user.leaguelevel = leaguelevel;
+                //user.leaguelevel = leaguelevel;
 
                 user.level = level;
                 user.numberofgameslost = numberofgameslost;
@@ -162,9 +162,9 @@ public class DBManager : Singleton<DBManager>
                 user.totalnumberofgames = totalnumberofgames;
                 user.score = score;
 
-                Debug.Log("Kullanıcı login oldu ve bilgileri çekildi, lobby sahnesine yönlendiriliyorsunuz...");
+                Debug.Log("Kullanıcı login oldu ve bilgileri çekildi, mainmenu sahnesine yönlendiriliyorsunuz...");
 
-                SceneManager.LoadScene("Lobby");
+                SceneManager.LoadScene("MainMenu");
             }
         });
     }

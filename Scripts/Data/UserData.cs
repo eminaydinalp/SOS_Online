@@ -19,8 +19,7 @@ public class UserData : Singleton<UserData>
     public string username;
     public string country;
     public string city;
-    public string sex;
-    public string leaguelevel;
+    //public string leaguelevel;
 
     #endregion
 
