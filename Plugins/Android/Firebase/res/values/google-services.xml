@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources tools:keep="@string/firebase_database_url,@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id" xmlns:tools="http://schemas.android.com/tools">
+  <string name="firebase_database_url" translatable="false">https://tiktakto-98b71.firebaseio.com</string>
+  <string name="gcm_defaultSenderId" translatable="false">159812441963</string>
+  <string name="google_storage_bucket" translatable="false">tiktakto-98b71.appspot.com</string>
+  <string name="project_id" translatable="false">tiktakto-98b71</string>
+  <string name="google_api_key" translatable="false">AIzaSyAtRLphuqbIBfOm9Yj36aWaBieqQp0CLeM</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyAtRLphuqbIBfOm9Yj36aWaBieqQp0CLeM</string>
+  <string name="google_app_id" translatable="false">1:159812441963:android:25e8c257c8c6bbd7d75e2e</string>
+  <string name="default_web_client_id" translatable="false">159812441963-2glkv72ilfmqvrmaphsejq1ugpc109pm.apps.googleusercontent.com</string>
+</resources>
