@@ -101,6 +101,7 @@ public class DBManager : Singleton<DBManager>
         progression["level"] = 0;
         progression["totalnumberofgames"] = 0;
         progression["totalgoldcount"] = 0;
+
         progression["leaguelevel"] = "";
 
         usersDatabase.Child(user.userId).Child("General").UpdateChildrenAsync(general);
@@ -169,7 +170,7 @@ public class DBManager : Singleton<DBManager>
         });
     }
 
-    public void CreateRoom()
+    public void CreateRoom(string roomName, string boardName, string time)
     {
         string roomId = roomsDatabase.Push().Key;
         room.roomId = roomId;
@@ -192,6 +193,9 @@ public class DBManager : Singleton<DBManager>
         roomDetails["PlayerAReady"] = false;
         roomDetails["PlayerBReady"] = false;
         roomDetails["Board"] = boards;
+        roomDetails["RoomName"] = roomName;
+       // roomDetails["BoardList"] = roomName;
+       // roomDetails["TimeList"] = roomName;
 
         roomsDatabase.Child(room.roomId).UpdateChildrenAsync(roomDetails);
 
@@ -204,8 +208,10 @@ public class DBManager : Singleton<DBManager>
         SceneManager.LoadScene("Transaction");
     }
 
-    public void GetRoomList(Dropdown roomList)
+    public void GetRoomList()
     {
+
+        
         roomsDatabase.GetValueAsync().ContinueWith(task =>
         {
             if (task.IsFaulted)
@@ -222,18 +228,27 @@ public class DBManager : Singleton<DBManager>
                 foreach (DataSnapshot r in snapshot.Children)
                 {
                     string _roomId = r.Key;
+                    string _roomName = snapshot.Child(_roomId).Child("RoomName").Value.ToString();
                     string _hostId = snapshot.Child(_roomId).Child("PlayerA").Value.ToString();
-                    room.roomList.Add(new Room(_roomId, _hostId));
+                    room.roomList.Add(new Room(_roomId, _hostId, _roomName));
 
-                    menuList.Add(_roomId);
+                    menuList.Add(_roomName);
                     index++;
                 }
 
-                roomList.AddOptions(menuList);
+                //roomList.Add(_roomName);
             }
         });
     }
+    public void AddRoomToScrollView()
+    {
+        // veriler scroll'a yüklenecek
+        // 1. content empty gameobject scrollview'in altında 
+        // 2. 
+        // veriler scroll'dan çekilecek
+        GetRoomList();
 
+    }
     public void SendInvite(string roomId)
     {
         Dictionary<string, object> invite = new Dictionary<string, object>();

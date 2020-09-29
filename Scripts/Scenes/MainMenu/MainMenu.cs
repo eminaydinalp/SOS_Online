@@ -52,6 +52,7 @@ public class MainMenu : MonoBehaviour
 
     void GoLobby()
     {
-        
+        Debug.Log("Lobbye gidiyorsunuz...");
+        SceneManager.LoadScene("Lobby");
     }
 }

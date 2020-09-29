@@ -8,10 +8,12 @@ public class Room
 {
     public string roomId;
     public string hostId;
+    public string roomName;
     
-    public Room(string _roomId, string _hostId)
+    public Room(string _roomId, string _hostId, string _roomName)
     {
         this.roomId = _roomId;
         this.hostId = _hostId;
+        this.roomName = _roomName;
     }
 }

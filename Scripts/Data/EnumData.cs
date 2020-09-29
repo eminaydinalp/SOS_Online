@@ -9,6 +9,7 @@ public enum GameState
     Login,
     Signup,
     Lobby,
+    CreateRoom,
     Gameplay,
     Result,
     Transaction
