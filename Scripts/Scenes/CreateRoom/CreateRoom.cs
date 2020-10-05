@@ -16,7 +16,7 @@ public class CreateRoom : MonoBehaviour
     private UserData user;
     private RoomData room;
 
-    void Start()
+    void Awake()
     {
         DB = DBManager.Instance;
         user = UserData.Instance;
@@ -24,8 +24,8 @@ public class CreateRoom : MonoBehaviour
         user.gameState = GameState.CreateRoom;
 
         createRoom.onClick.AddListener(CreateRooms);
-        // boardListe boards eklenecek 
-        // boardListen boards çekilecek
+        // boardList'e boards eklenecek 
+        // boardList'ten boards çekilecek
 
         //boardList.AddOptions();
         //timeList.AddOptions();
@@ -34,7 +34,6 @@ public class CreateRoom : MonoBehaviour
 
     void CreateRooms()
     {
-
         string roomName = roomNameForm.text;
         string boardList = "";
         string timeList = "";

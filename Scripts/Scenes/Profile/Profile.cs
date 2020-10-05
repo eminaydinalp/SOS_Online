@@ -18,7 +18,7 @@ public class Profile : MonoBehaviour
 
     private UserData user;
 
-    void Start()
+    void Awake()
     {
         user = UserData.Instance;
         GetUserProfileInformation();

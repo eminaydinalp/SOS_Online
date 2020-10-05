@@ -10,45 +10,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public class Lobby : MonoBehaviour
 {
     private DBManager DB;
 
-    public ScrollRect gameListForm;
+    public GameObject roomPrefab;
+    public GameObject parent;
+    public Text text;
 
-    public GameObject prefab;
-    public GameObject roomListObject;
 
-
-    public Button createRoom;
+    public Button createRoomButton;
+    public Button refreshLobbyButton;
 
     private UserData user;
     private RoomData room;
+    public List<string> roomList;
 
-
+    
     void Awake()
     {
         DB = DBManager.Instance;
         user = UserData.Instance;
-
-
+        
         user.gameState = GameState.Lobby;
-
         //joinRoom.onClick.AddListener(JoinRoom);
-        createRoom.onClick.AddListener(CreateRoom);
+        createRoomButton.onClick.AddListener(CreateRoom);
+        refreshLobbyButton.onClick.AddListener(RefreshLobby);
 
-        //DB.AddRoomToScrollView();
+        //DB.GetRoomList();
+        //Debug.Log(menuList[1]);
+        StartCoroutine(DB.GetRoomList((menuList) => {
+            Debug.Log("Geldi: " + menuList.Count);
 
-        //auto login off
-        //DB.auth.auth.SignOut();
+        }));
 
-        CreatePrefabs();
-    }
-
-    void CreatePrefabs()
-    {
-        Instantiate(prefab, roomListObject.transform.position, Quaternion.identity,roomListObject.transform);
+        //Instantiate(roomPrefab, parent.transform.position, Quaternion.identity, parent.transform);
     }
 
     //void JoinRoom()
@@ -61,13 +60,13 @@ public class Lobby : MonoBehaviour
     void CreateRoom()
     {
         SceneManager.LoadScene("CreateRoom");
-        //DB.CreateRoom();
     }
 
     public void RefreshLobby()
     {
-        SceneManager.LoadScene("Lobby");
+        Debug.Log("yenilendi");
+        Instantiate(roomPrefab, parent.transform.position, Quaternion.identity, parent.transform);
     }
-
     
 }
+    

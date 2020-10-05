@@ -19,7 +19,7 @@ public class AuthManager : Singleton<AuthManager>
 
     public UserData user;
     
-    void Start()
+    void Awake()
     {
         auth = FirebaseAuth.DefaultInstance;
 

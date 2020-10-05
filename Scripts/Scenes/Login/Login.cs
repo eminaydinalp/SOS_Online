@@ -20,7 +20,7 @@ public class Login : MonoBehaviour
 
     private UserData user;
     
-    void Start()
+    void Awake()
     {
         auth = AuthManager.Instance;
         user = UserData.Instance;

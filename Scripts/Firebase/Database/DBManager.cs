@@ -14,6 +14,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Firebase.Extensions;
+using System.Linq;
+using System.Threading.Tasks;
 
 public class DBManager : Singleton<DBManager>
 {
@@ -32,6 +34,7 @@ public class DBManager : Singleton<DBManager>
 
     void Start()
     {
+
         auth = AuthManager.Instance;
 
         user = UserData.Instance;
@@ -204,14 +207,17 @@ public class DBManager : Singleton<DBManager>
         OpenListenRoom();
         OpenListenInvites();
 
+        
+
         Debug.Log("Oda Kuruldu... Diğer oyuncu bekleniyor... Transaction sahnesine yönlendiriliyorsunuz...");
         SceneManager.LoadScene("Transaction");
     }
 
-    public void GetRoomList()
+    public IEnumerator GetRoomList(Action<List<string>> callback)
     {
+        yield return new WaitForSeconds(1f);
 
-        
+        List<string> menuList = null;
         roomsDatabase.GetValueAsync().ContinueWith(task =>
         {
             if (task.IsFaulted)
@@ -219,43 +225,41 @@ public class DBManager : Singleton<DBManager>
                 Debug.Log("faulted");
             }
             else if (task.IsCompleted)
-            {
+            { // Create room'a basılınca bir oda oluşacak.
+                // oluşan odanın prefabı gelecek.
+                // gelen prefablar bir listeye aktarılacak.
+                // listeden tek tek çekilip her prefab roomList'in altına gidecek.
                 DataSnapshot snapshot = task.Result;
 
-                List<string> menuList = new List<string>();
+                //int index = 0;
 
-                int index = 0;
-                foreach (DataSnapshot r in snapshot.Children)
-                {
-                    string _roomId = r.Key;
-                    string _roomName = snapshot.Child(_roomId).Child("RoomName").Value.ToString();
-                    string _hostId = snapshot.Child(_roomId).Child("PlayerA").Value.ToString();
-                    room.roomList.Add(new Room(_roomId, _hostId, _roomName));
+                menuList = snapshot.Children.Select(r => r.Child("RoomName").Value.ToString()).ToList();
+                var roomList = snapshot.Children.Select(r => new Room(r.Key, r.Child("PlayerA").Value.ToString(), r.Child("RoomName").Value.ToString()));
+                room.roomList.AddRange(roomList);
 
-                    menuList.Add(_roomName);
-                    index++;
-                }
+                ////Debug.Log(string.Join("#", menuLasdasdas));
+                //foreach (DataSnapshot r in snapshot.Children)
+                //{
+                //    string _roomId = r.Key;
+                //    string _roomName = snapshot.Child(_roomId).Child("RoomName").Value.ToString();
+                //    string _hosjhö = snapshot.Child(_roomId).Child("PlayerA").Value.ToString();
+                //    room.roomList.Add(new Room(_roomId, _hostId, _roomName));
+                //    menuList.Add(_roomName);
+                //    //buradan eklenileni döndürmeyi dene
+                //    index++;
 
-                //roomList.Add(_roomName);
+                //}
             }
+            callback(menuList);
         });
     }
-    public void AddRoomToScrollView()
-    {
-        // veriler scroll'a yüklenecek
-        // 1. content empty gameobject scrollview'in altında 
-        // 2. 
-        // veriler scroll'dan çekilecek
-        GetRoomList();
 
-    }
     public void SendInvite(string roomId)
     {
         Dictionary<string, object> invite = new Dictionary<string, object>();
         invite[user.userId] = user.userId;
 
         invitesDatabase.Child(roomId).UpdateChildrenAsync(invite);
-
         OpenListenAcceptedInvites();
     }
 

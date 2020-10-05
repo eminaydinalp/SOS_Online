@@ -14,7 +14,7 @@ public class MainMenu : MonoBehaviour
     public Button leaderBoardButton;
     public Button settingsButton;
 
-    void Start()
+    void Awake()
     {
         playButton.onClick.AddListener(GoLobby);
         profileButton.onClick.AddListener(GoProfile);

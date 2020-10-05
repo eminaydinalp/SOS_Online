@@ -20,7 +20,7 @@ public class InviteManager : MonoBehaviour
 
     public string otherUserId;
 
-    private void Start()
+    private void Awake()
     {
         DB = DBManager.Instance;
 
